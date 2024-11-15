@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Product } from '@shared/models/product.interface';
 
 @Component({
   selector: 'app-card',
@@ -8,5 +9,11 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class CardComponent {
+  product = input.required<Product>();
+  @Output() addToCartEvent = new EventEmitter<Product>();
+
+  onAddToCart(): void {
+    this.addToCartEvent.emit(this.product());
+  }
 
 }

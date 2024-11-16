@@ -10,6 +10,7 @@
 
 
         <img
+        [routerLink]="['/products', (product().id)]"
           class="w-full transition duration-500 transform hover:scale-105"
           src="{{ product().image }}"
           alt="{{ product().title }}"
@@ -21,9 +22,9 @@
           {{ product().category }}
         </h3>
         <h2 class="py-4 text-lg font-medium text-gray-900 title-font">
-          <!-- <a [routerLink]="['/products', product().id]"
+          <a [routerLink]="['/products', product().id]"
             >{{ product().title | slice : 0 : 30 }}
-          </a> -->
+          </a>
         </h2>
         <div class="flex items-center justify-between mt-1">
           <p class="text-2xl font-bold text-orange-500">

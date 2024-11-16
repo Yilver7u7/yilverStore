@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-details',
@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export default class DetailsComponent {
+  //Lo que fue enviado desde nuestra card y obtenemos de este el ID
+  @Input({alias: 'id'}) productId!: number;
 
 }

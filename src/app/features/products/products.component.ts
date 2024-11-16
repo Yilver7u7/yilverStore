@@ -10,6 +10,14 @@ import { ProductsService } from '@api/products.service';
   styles: ``
 })
 export default class ProductsComponent {
+
+  //Other way to see the inject
+  // constructor(
+  //   private productsService: ProductsService
+  // ){}
+  // pepe = this.productsService.products;
+
+
   private readonly productSvc = inject( ProductsService);
   products = this.productSvc.products;
 

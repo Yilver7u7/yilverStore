@@ -12,5 +12,5 @@ import { ProductsService } from '@api/products.service';
 export default class ProductsComponent {
   private readonly productSvc = inject( ProductsService);
   products = this.productSvc.products;
-  
+
 }

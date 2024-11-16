@@ -1,11 +1,24 @@
-
+<!-- Cuando usamos los signal es preferible hacer uso de la nueva sintaxis
+Debido a que pueden haber problemas de compatibilidad -->
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap -m-4">
-      @for ( item of products(); track $index){
-        <!-- <app-card class="w-full p-4 lg:w-1/4 md:w-1/2" /> -->
+      @for (product of products(); track $index) {
+      <app-card
+        class="w-full p-4 lg:w-1/4 md:w-1/2"
+        [product]="product"
+      />
       }
     </div>
   </div>
 </section>
+
+
+<!-- Ejemplo de como no podrias intentar hacerlo, pero puede dar problemas -->
+
+<!-- <app-card
+  *ngFor="let item of products(); trackBy: trackByProductId"
+  class="w-full p-4 lg:w-1/4 md:w-1/2"
+  [product]="item"
+></app-card> -->
 

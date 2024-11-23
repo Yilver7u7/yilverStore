@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EnvironmentInjector, inject, Injectable, runInInjectionContext, signal } from '@angular/core';
 import { environment } from '@envs/environment.development';
 import { Product } from '@shared/models/product.interface';
-import { tap } from 'rxjs';
+import { tap, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop'
 
 @Injectable({providedIn: 'root'})
@@ -19,7 +19,9 @@ export class ProductsService   {
   // Get whole list of products
   public getProducts(): void{
     this._http.get<Product[]>(`${this._endPoint}/products/?sort=desc`)//Le damos una propiedad para que se ordenen de manera decendente
-    .pipe(tap((data:any[]) => this.products.set(data)))
+    .pipe(
+      map( ( products: Product[]) => products.map( (product:Product) => ( {...product,qty:1} ))),
+      tap((products:Product[]) => this.products.set(products)))
     .subscribe()
   }
 

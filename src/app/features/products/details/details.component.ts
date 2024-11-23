@@ -3,6 +3,7 @@ import { Component, inject, input, Input, OnInit, Signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ProductsService } from '@api/products.service';
 import { Product } from '@shared/models/product.interface';
+import { CartStore } from '@shared/models/shopping-cart.store';
 
 @Component({
   selector: 'app-details',
@@ -25,12 +26,15 @@ export default class DetailsComponent implements OnInit{
 
   private readonly productsService = inject(ProductsService);
   private readonly _sanitizer = inject(DomSanitizer);
+  cartStore = inject( CartStore);
 
   ngOnInit(): void {
     this.product = this.productsService.getProductById(this.productId());
   }
 
-  onAddToCart(){}
+  onAddToCart(){
+    this.cartStore.addToCart(this.product() as Product)
+  }
 
   generateSVG(index: number): SafeHtml {
     let svgContent = null;

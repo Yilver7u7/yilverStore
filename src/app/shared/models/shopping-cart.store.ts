@@ -48,25 +48,24 @@ export const CartStore = signalStore(
   })),
   withMethods(({ products, ...store }) => ({
     /**
-     * Adds a new product to the cart.
-     * Updates the `products` state by appending the new product.
+     * Adds a new product to the cart or updates its quantity if it's already in the cart.
      * @param product - The product to add to the cart.
      */
     addToCart(product: Product) {
-      const isProductInCart = products().find( (item:Product) =>  item.id === product.id );
+      const existingProduct = products().find((item) => item.id === product.id);
 
-      if( isProductInCart ){
-        isProductInCart.qty++;
-        isProductInCart.subtotal = isProductInCart.qty * isProductInCart.price;
-        patchState(store, { products: [...products()] });
-      }else{
+      if (existingProduct) {
+        existingProduct.qty++;
+        existingProduct.subtotal = existingProduct.qty * existingProduct.price;
+      } else {
         patchState(store, { products: [...products(), product] });
       }
+
+      patchState(store, { products: [...products()] }); // Ensure state update
     },
 
     /**
      * Removes a product from the cart by its ID.
-     * Filters out the product with the matching ID and updates the `products` state.
      * @param id - The ID of the product to remove.
      */
     removeFromCart(id: number) {
@@ -79,6 +78,29 @@ export const CartStore = signalStore(
      */
     clearCart() {
       patchState(store, initialState);
+    },
+
+    /**
+     * Updates the quantity of a product in the cart.
+     * @param id - The ID of the product to update.
+     * @param newQty - The new quantity of the product.
+     */
+    updateQuantity(id: number, newQty: number) {
+      const updatedProducts = products().map((product) =>
+        product.id === id
+          ? { ...product, qty: newQty, subtotal: product.price * newQty }
+          : product
+      );
+      patchState(store, { products: updatedProducts });
+    },
+
+    /**
+     * Finds a product in the cart by its ID.
+     * @param id - The ID of the product to find.
+     * @returns The product if found, undefined otherwise.
+     */
+    findProductById(id: number): Product | undefined {
+      return products().find((product) => product.id === id);
     },
   }))
 );

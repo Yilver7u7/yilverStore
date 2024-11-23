@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from '@envs/environment';
+import { environment } from '../../../environments/environment';
 import { Product } from '@shared/models/product.interface';
 import { loadStripe } from '@stripe/stripe-js';
 import { map } from 'rxjs';

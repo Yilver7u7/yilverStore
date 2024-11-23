@@ -1,0 +1,16 @@
+/* Animación que mueve el elemento hacia abajo y aumenta su opacidad */
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Aplicación de la animación a los elementos con la clase show-cart-animation */
+.show-cart-animation {
+  animation: slideDown 0.5s ease-in-out forwards;
+}

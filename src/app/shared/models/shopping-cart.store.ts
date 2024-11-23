@@ -53,7 +53,15 @@ export const CartStore = signalStore(
      * @param product - The product to add to the cart.
      */
     addToCart(product: Product) {
-      patchState(store, { products: [...products(), product] });
+      const isProductInCart = products().find( (item:Product) =>  item.id === product.id );
+
+      if( isProductInCart ){
+        isProductInCart.qty++;
+        isProductInCart.subtotal = isProductInCart.qty * isProductInCart.price;
+        patchState(store, { products: [...products()] });
+      }else{
+        patchState(store, { products: [...products(), product] });
+      }
     },
 
     /**

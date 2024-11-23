@@ -32,9 +32,21 @@ export default class DetailsComponent implements OnInit{
     this.product = this.productsService.getProductById(this.productId());
   }
 
-  onAddToCart(){
-    this.cartStore.addToCart(this.product() as Product)
+  onAddToCart(): void {
+    const currentProduct = this.product(); // Obtener el valor de la signal
+    console.log(currentProduct)
+    try {
+      if (currentProduct as Product) { // Verificar si el producto no es undefined
+        this.cartStore.addToCart(currentProduct as Product); // Agregar al carrito solo si es un producto válido
+      } else {
+        console.log("Error!")
+        console.error('Product is undefined. Cannot add to cart.');
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 
   generateSVG(index: number): SafeHtml {
     let svgContent = null;

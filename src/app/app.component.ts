@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { ProductsService } from './api/products.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "./layaout/header/header.component";
+import SpinnerComponent from "./shared/components/spinner.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, HeaderComponent],
+  imports: [RouterOutlet, CommonModule, HeaderComponent, SpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

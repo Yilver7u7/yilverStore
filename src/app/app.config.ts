@@ -1,16 +1,24 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { ApplicationConfig } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-
+import { SpinnerInterceptor } from '@shared/interceptors/spinner.interceptor';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
+import { ErrorResponseInterceptor } from '@shared/interceptors/error-response.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    //Esto es para que los componentes que se encuentran en diferentes rutas me permitan enviar informacion entre ellos
-    // Mediante el uso del Input y Output
+    provideAnimations(),
+    provideToastr({ timeOut: 900, preventDuplicates: true }),
     provideRouter(routes, withComponentInputBinding()),
-    //Add HttpClient to connect with the api
-    provideHttpClient(withFetch())
-    ]
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([ErrorResponseInterceptor, SpinnerInterceptor])
+    ),
+  ],
 };

@@ -98,5 +98,5 @@ function calculateProductCount(products: Product[]): number {
  * @returns The total amount of all products in the cart.
  */
 function calculateTotalAmount(products: Product[]): number {
-  return products.reduce((acc, product) => acc + product.price, 0);
+  return products.reduce((acc, product) => acc + product.price * product.qty, 0);
 }
